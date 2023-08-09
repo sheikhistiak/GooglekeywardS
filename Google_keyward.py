@@ -9,7 +9,7 @@ from datetime import datetime
 def load_data(file):
     workbook = openpyxl.load_workbook(file)
 
-    # Get the current day of the week (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)
+    # Get the current day of the week
     current_day = datetime.today().weekday()
 
     # Get the worksheet corresponding to the current day of the week
@@ -23,9 +23,7 @@ def load_data(file):
         if index >= 2:
             c_column_values.append(row[0].value)
 
-    # Print the collected values
-    # print("Values in column C of", current_worksheet)
-    # print(c_column_values)
+    
     return c_column_values
     # Close the workbook
     workbook.close()
@@ -50,15 +48,12 @@ def perform_google_search(keyword):
     search_box = driver.find_element(By.ID, 'APjFqb')
     search_box.send_keys(keyword)
 
-    # Wait for a few seconds (you might need to adjust this)
-    time.sleep(5)
+    # Wait for a few seconds
+    time.sleep(1)
 
-    # Perform the search by pressing the 'RETURN' key
-    # search_box.send_keys(Keys.RETURN)
-    # search_box.send_keys(Keys.SPACE)
 
     # Wait for the search results to load
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(5)
 
     # Get the HTML source of the search results page
     html = driver.page_source
@@ -67,7 +62,6 @@ def perform_google_search(keyword):
     soup = BeautifulSoup(html, 'html.parser')
     soup_pretty = soup.prettify()
 
-    # Print the prettified HTML to the console
     # print(soup_pretty)
 
     # Find all the search list on the page
@@ -76,7 +70,7 @@ def perform_google_search(keyword):
     # print(Search_list_str)
 
     # Wait for a few seconds
-    time.sleep(5)
+    time.sleep(1)
 
     # Update the soup
     html = driver.page_source
@@ -94,11 +88,11 @@ def perform_google_search(keyword):
     for search_result in search_results:
         span_element = search_result.find('span')
         if span_element:
-            text = span_element.text.strip()  # Extract text and remove leading/trailing spaces
+            text = span_element.text.strip()  # Extract text and remove spaces
             if text:
                 text_list.append(text)
 
-    # List the extracted text in ascending order based on the length of the search results
+    # List the extracted text in ascending order
     text_list.sort(key=len)
 
     # Print the rearranged text list
@@ -137,7 +131,7 @@ for keyword in keywords:
 
     workbook = openpyxl.load_workbook(file_path)
 
-    # Get the current day of the week (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)
+    # Get the current day of the week
     current_day_of_week = datetime.today().weekday()
 
     # Get the worksheet corresponding to the current day of the week
